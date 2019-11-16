@@ -28,6 +28,12 @@ module.exports = {
             .setValue('@textEO', ' ')
             .click('@buttonEO')
             .verify.containsText('@resultEven', 'null')
+
+            .clearValue('@textEO')
+            .setValue('@textEO', '12345')
+            .click('@buttonEO')
+            .verify.containsText('@resultEven', '24','Numbers were not split')
+            .verify.containsText('@resultOdd', '135','Numbers were not split')
     },
     'Filter Object Test': browser => {
         bbq
@@ -80,5 +86,73 @@ module.exports = {
             .setValue('@textFS', '123')
             .click('@buttonFS')
             .verify.containsText('@resultFS',' ')
+    },
+    'Palindrome Test': browser => {
+        bbq
+            .setValue('@textP', 'racecar')
+            .click('@buttonP')
+            .verify.containsText('@resultP','true')
+
+            .clearValue('@textP')
+            .setValue('@textP', '123321')
+            .click('@buttonP')
+            .verify.containsText('@resultP','true')
+
+            .clearValue('@textP')
+            .setValue('@textP', 'Mark')
+            .click('@buttonP')
+            .verify.containsText('@resultP','false')
+
+            .clearValue('@textP')
+            .setValue('@textP', 'asddsa')
+            .click('@buttonP')
+            .verify.containsText('@resultP','true')
+
+            .clearValue('@textP')
+            .setValue('@textP', '@#$')
+            .click('@buttonP')
+            .verify.containsText('@resultP','false')
+    },
+    'Sum Test': browser => {
+        bbq
+            .setValue('@textS1', '2')
+            .setValue('@textS2', '2')
+            .click('@buttonS')
+            .verify.containsText('@resultS','4')
+
+            .clearValue('@textS1')
+            .clearValue('@textS2')
+            .setValue('@textS1', '123')
+            .setValue('@textS2', '123')
+            .click('@buttonS')
+            .verify.containsText('@resultS','246')
+
+            .clearValue('@textS1')
+            .clearValue('@textS2')
+            .setValue('@textS1', '')
+            .setValue('@textS2', '2')
+            .click('@buttonS')
+            .verify.containsText('@resultS', '2', 'This should be a 2.')
+
+            .clearValue('@textS1')
+            .clearValue('@textS2')
+            .setValue('@textS1', '2')
+            .setValue('@textS2', '')
+            .click('@buttonS')
+            .verify.containsText('@resultS', '2', 'This should be a 2.')
+
+            .clearValue('@textS1')
+            .clearValue('@textS2')
+            .setValue('@textS1', '')
+            .setValue('@textS2', '')
+            .click('@buttonS')
+            .verify.containsText('@resultS', '', 'Nothing shoud appear.')
+
+            .clearValue('@textS1')
+            .clearValue('@textS2')
+            .setValue('@textS1', 'e')
+            .setValue('@textS2', 'e')
+            .click('@buttonS')
+            .verify.containsText('@resultS', '', 'Letters should not be accepted.')
     }
 }
